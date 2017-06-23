@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>	
+	<meta charset="utf-8">	
+	<meta name="description" content="A client-side encryption suite for plain-text, HTML pages, or files.">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<!-- Bower Stylesheets -->
+	<link rel="stylesheet" type="text/css" href="./www/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="./www/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">	
+	<link rel="stylesheet" type="text/css" href="./www/spinkit/css/spinkit.css" rel="stylesheet">
+	
+	<!-- Stylesheets-->
+	<link rel="stylesheet" type="text/css" href="./css/site.css?v=1.0.0.0" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="./css/loader.css?v=1.0.0.0" rel="stylesheet">
+
+	<!-- Bower Scripts -->
+	<script src="./www/jquery/js/jquery.min.js"></script>	
+	<script src="./www/bootstrap/js/bootstrap.min.js"></script>
+	<script src="./www/crypto-js/js/crypto-js.js"></script>
+
+	<!-- Scripts -->
+	<script src="./scripts/fullcrypto-ui.js?v=1.0.0.0"></script>
+	<script src="./scripts/fullcrypto.js?v=1.0.0.0"></script>
+	
+	<title>Full Crypto</title>
+</head>
+<body>
+	<!-- Page Info -->
+	<div id="page-info" class="jumbotron">
+		<h1>Full Crypto</h1>
+		<p class="text-info">A simple client-side encryption suite for plain-text, HTML pages, or files.</p>
+	</div>
+
+	<!-- Spinkit Spinner / Loader -->
+	<div class="loader">
+		<div class="sk-wave">
+			<div class="sk-rect sk-rect1"></div>
+			<div class="sk-rect sk-rect2"></div>
+			<div class="sk-rect sk-rect3"></div>
+			<div class="sk-rect sk-rect4"></div>
+			<div class="sk-rect sk-rect5"></div>
+		</div>
+		<div class="loader-text">
+			- Please Wait -
+		</div>
+	</div>
+
+	<div class="container" style="margin-top: 10px;" >
+		<!-- Alert modal for errors -->
+		<div id="alert-modal" class="modal fade">
+			<div class="modal-dialog">
+				<div class="alert alert-danger alert-dismissable fade in">
+					<a href="#" class="close" data-dismiss="modal" aria-label="close">&times;</a>
+					<div id="alert-modal-text"></div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Password Input -->
+		<div class="form-group">
+			<label>Password:</label>
+			<input id="pwd" type="password" class="form-control password-input"></input>
+			<div class="container checkbox">
+				<input id="show-pwd" type="checkbox" onchange="showPassword();">Show Password</input>
+			</div>
+		</div>
+		
+		<!-- Plain Text and HTML Crypto -->
+		<div class="panel panel-primary">
+			<div class="panel-heading" data-toggle="collapse" data-target="#panel-plain-text">
+				<h2 class="panel-title">Plain-Text / HTML</h2>				
+				<span class="pull-right panel-toggle"><i class="panel-toggle-icon panel-collapse"></i></span>
+			</div>
+			
+			<div id="panel-plain-text" class="panel-body collapse">
+				<!-- Plain Text / HTML Tabs -->
+				<ul class="nav nav-tabs">
+					<li class="active"><a id="encrypt-tab-btn" data-toggle="tab" href="#encrypt-group">Encrypt</a></li>
+					<li><a id="decrypt-tab-btn" data-toggle="tab" href="#decrypt-group">Decrypt</a></li>
+				</ul>
+
+				<div>&nbsp;</div>
+
+				<!-- Plain Text / HTML Content -->
+				<div class="tab-content">
+					<div id="encrypt-group" class="tab-pane fade in active">
+						<div class="form-group">
+							<textarea class="form-control" id="decrypted-text" rows="15" style="margin-bottom: 10px;" ></textarea>
+							<button type="button" class="btn btn-primary" onclick="encryptText();">Encrypt</button>									
+						</div>
+					</div>
+
+					<div id="decrypt-group" class="tab-pane fade">
+						<div class="form-group">
+							<textarea class="form-control" id="encrypted-text" rows="15" style="margin-bottom: 10px;" ></textarea>
+							<button type="button" class="btn btn-primary" onclick="decryptText();">Decrypt</button>							
+						</div>						
+					</div>
+				</div>
+
+				<!-- Plain Text/HTML SHA256 HASH -->
+				<div class="form-group" id="plain-text-sha-gen">
+					<div class="container checkbox">
+						<input id="display-text-sha" type="checkbox">Display SHA-256 Hash</input>
+						<span class="info sha-info" data-toggle="popover" data-trigger="hover" title="SHA-256 Hash" data-content="">
+							<i class="glyphicon  glyphicon-question-sign"></i>
+						</span>
+					</div>					
+					<input id="plain-text-sha" type="text" class="form-control" readonly="readonly"></input>
+				</div>
+				
+				<!-- HTML Content Viewer -->
+				<div class="panel panel-default">
+					<div class="panel-heading" data-toggle="collapse" data-target="#panel-html" onclick="showAsHtml();">
+						<h3 class="panel-title">HTML</h2>							
+						<span class="pull-right panel-toggle"><i class="panel-toggle-icon panel-collapse"></i></span>						
+					</div>
+
+					<div id="panel-html" class="panel-body collapse">
+						<div class="pull-right"><i class="glyphicon glyphicon-refresh" onclick="showAsHtml();"></i></div>
+						<iframe id="html-content" class="view-area" frameborder="0" scrolling="yes">
+						
+						</iframe>
+					</div>								
+				</div>				
+			</div>			
+		</div>
+
+		<!-- File Crypto -->
+		<div class="panel panel-primary">
+			<div class="panel-heading" data-toggle="collapse" data-target="#panel-files">
+				<h2 class="panel-title">File (Max size: 10MB)</h2>				
+				<span class="pull-right panel-toggle"><i class="panel-toggle-icon panel-collapse"></i></span>
+			</div>
+			
+			<div id="panel-files" class="panel-body collapse">
+				<!-- File Tabs -->
+				<ul class="nav nav-tabs">
+					<li class="active"><a id="encrypt-file-tab-btn" data-toggle="tab" href="#encrypt-file-group">Encrypt</a></li>
+					<li><a id="decrypt-file-tab-btn" data-toggle="tab" href="#decrypt-file-group">Decrypt</a></li>
+				</ul>				
+
+				<!-- File Upload Dialog -->
+				<span class="container" style="margin-top: 10px;">					
+					<input type="file" id="file-input" />
+					<span id="file-size"></span>
+				</span>
+
+				<!-- File Content -->
+				<div class="tab-content">
+					<div id="encrypt-file-group" class="tab-pane fade in active">
+						<div class="form-group">							
+							<button type="button" class="btn btn-primary" onclick="encryptFile();">Encrypt</button>									
+						</div>
+					</div>
+
+					<div id="decrypt-file-group" class="tab-pane fade">
+						<div class="form-group">							
+							<button type="button" class="btn btn-primary" onclick="decryptFile();">Decrypt</button>							
+						</div>						
+					</div>
+				</div>
+
+				<!-- File SHA256 HASH -->
+				<div class="form-group" id="file-sha-gen">
+					<div class="container checkbox">
+						<input id="display-file-sha" type="checkbox">Display SHA-256 Hash</input>
+						<span class="info sha-info" data-toggle="popover" data-trigger="hover" title="SHA-256 Hash" data-content="">
+							<i class="glyphicon  glyphicon-question-sign"></i>
+						</span>
+					</div>					
+					<input id="file-sha" type="text" class="form-control" readonly="readonly"></input>
+				</div>
+
+				<!-- File Download -->
+				<div id="panel-file-download" class="panel panel-default collapse">
+					<div class="panel-heading" data-toggle="collapse" data-target="#panel-file-download-body">
+						<h3 class="panel-title">File Download</h2>
+						<span class="pull-right panel-toggle"><i class="panel-toggle-icon panel-collapse"></i></span>						
+					</div>
+
+					<div id="panel-file-download-body" class="panel-body collapse">
+						<a id="file-download" href="#panel-file-download-body">Download</a>
+					</div>								
+				</div>
+
+				<!-- File Content Viewer -->
+				<div id="panel-file-content" class="panel panel-default collapse">
+					<div class="panel-heading" data-toggle="collapse" data-target="#panel-file-content-body">
+						<h3 class="panel-title">File Contents (Max size: 50KB)</h2>
+						<span class="pull-right panel-toggle"><i class="panel-toggle-icon panel-collapse"></i></span>						
+					</div>
+
+					<div id="panel-file-content-body" class="panel-body collapse">
+						<pre id="file-content"></pre>
+					</div>								
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</body>
+</html>

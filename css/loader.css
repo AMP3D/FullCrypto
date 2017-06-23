@@ -1,0 +1,41 @@
+.loader {
+    background-color: rgba(0,0,0,0.7);
+    bottom: 0;
+    display: none;
+    min-height: 100%;
+    left: 0;
+    margin: auto;    
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 999998;
+}
+
+.loader-text {    
+    align-items: center;
+    color: #FFFFFF;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: flex;
+    min-height: 100%;
+    justify-content: center;
+    padding-top: 120px;
+    position: fixed;
+    width: 100%;
+    z-index: 999999;
+}
+
+.sk-wave {        
+    bottom: inherit;
+    height: 10%;
+    left: inherit;
+    margin: inherit;    
+    position: inherit;
+    right: inherit;
+    top: inherit;
+    z-index: 999999;
+}
+
+.sk-wave .sk-rect {
+    background-image: linear-gradient(to bottom,#FFFFFF 0,#eee 100%);
+}

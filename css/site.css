@@ -1,0 +1,71 @@
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../www/bootstrap/fonts/glyphicons-halflings-regular.eot');
+  src: url('../www/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), 
+    url('../www/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), 
+    url('../www/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), 
+    url('../www/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+}
+
+/* Keep textarea contained within a panel */
+textarea {
+    resize: none;
+}
+
+.checkbox {
+    margin-left: 10px;
+}
+
+.glyphicon-refresh {
+    cursor: pointer;
+}
+
+.info {
+    cursor: pointer;
+}
+
+.jumbotron {
+    height: 150px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.jumbotron h1 {
+    padding-left: 50px;
+}
+
+.jumbotron p {
+    padding-left: 150px;
+}
+
+.panel-heading {
+    cursor: pointer;
+}
+
+.panel-toggle {
+    margin-top: -15px;
+}
+
+.panel-toggle .panel-collapse:before {
+    content: "\e114";
+    font-family: Glyphicons Halflings;        
+}
+
+.panel-toggle .in:before {
+    content: "\e113";
+    font-family: Glyphicons Halflings;    
+    text-shadow: 1px 0px 20px #ffffff;
+    transition: 1s linear 0s;
+    -webkit-transition: 1s linear 0s;
+    -moz-transition: 1s linear 0s;
+    -o-transition: 1s linear 0s;
+}
+
+.password-input {
+    max-width: 500px;
+}
+
+.view-area {        
+    height: 600px;
+    width: 100%;
+}
