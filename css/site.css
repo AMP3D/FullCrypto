@@ -24,8 +24,7 @@ textarea {
     cursor: pointer;
 }
 
-.jumbotron {
-    height: 150px;
+.jumbotron {    
     padding-bottom: 5px;
     padding-top: 5px;
 }
